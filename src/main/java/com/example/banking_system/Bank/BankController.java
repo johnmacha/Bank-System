@@ -3,6 +3,7 @@ package com.example.banking_system.Bank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 @RestController
@@ -12,8 +13,9 @@ public class BankController {
     private BankService bankService;
 
     @PostMapping("/create")
-    public String createAccount(){
-        return "Account created!";
+    public String createAccount(@RequestBody BankAccount account){
+        bankService.createAccount(account.getAccNo(), account.getName());
+        return "Account created successfully!";
     }
 
     @GetMapping("/test")

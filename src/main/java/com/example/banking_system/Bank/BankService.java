@@ -7,7 +7,8 @@ public class BankService {
     private HashMap<String, BankAccount> account = new HashMap<>();
 
     public void createAccount(String accNo, String name){
-        account.put(accNo, new BankAccount(accNo, name));
+        BankAccount acc = new BankAccount(accNo, name);
+        account.put(accNo, acc);
     }
     public BankAccount getAccount(String accNo){
         return account.get(accNo);

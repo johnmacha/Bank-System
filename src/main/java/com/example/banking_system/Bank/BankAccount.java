@@ -10,6 +10,13 @@ public class BankAccount {
     this.name = name;
     this.balance = 0.0;
 }
+    //Getter
+    public String getName(){
+        return name;
+    }
+    public String getAccNo(){
+        return accNo;
+    }
 }
 
 
