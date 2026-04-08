@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/bank")
@@ -17,9 +18,18 @@ public class BankController {
         bankService.createAccount(account.getAccNo(), account.getName());
         return "Account created successfully!";
     }
-
-    @GetMapping("/test")
-    public String Test(){
-        return "Working";
+    @PostMapping("/deposit")
+    public String deposit(@RequestParam String accNo, @RequestParam double amount){
+        return bankService.deposit(accNo, amount);
     }
+    @GetMapping("/balance")
+    public String getBalance(@RequestParam String accNo){
+        BankAccount acc = bankService.getAccount(accNo);
+        if(acc==null){
+            return "Account not found";
+        }
+        return "Balance: "+acc.getBalance();
+    }
+
+    
 }
