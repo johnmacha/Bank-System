@@ -3,17 +3,19 @@ package com.example.banking_system.Bank;
 import java.util.ArrayList;
 import java.util.List;
 
-import jakarta.persistence.ElementCollection;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 @Entity
 public class BankAccount {
     @Id
     private String accNo;
     private String name;
     private double balance;
-    
-    @ElementCollection
+
+    //Many transactions, one account 
+    @OneToMany(mappedBy= "account", cascade = CascadeType.ALL) //Saving account saves transactions
     private List<Transaction> transactions = new ArrayList<>();
 
     public BankAccount(){} //Empty constructor for Spring + JPA input
@@ -45,13 +47,16 @@ public class BankAccount {
     public void deposit(double amount){
         if (amount>0){
             this.balance += amount;
-            transactions.add(new Transaction("DEPOSIT :", amount)); // Constructor call
+            // transactions.add(new Transaction("DEPOSIT :", amount)); // Constructor call
+            Transaction t = new Transaction("DEPOSIT", amount, this);
+            transactions.add(t);
         }
     }
     public void withdraw(double amount){
         if(amount > 0 && balance >= amount){
             this.balance -= amount;
-            transactions.add(new Transaction("WITHDRAW :" ,amount));
+            Transaction t = new Transaction("WITHDRAW", amount, this);
+            transactions.add(t);
         }
     }
     // Getter for Transactions
