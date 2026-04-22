@@ -50,7 +50,7 @@ public class BankController {
          
     }    
     @GetMapping("/{accNo}/transactions")
-    public ResponseEntity<?> getTransactions(
+    public ResponseEntity<APIResponse<List<TransactionDTO>>> getTransactions(
         @PathVariable String accNo,
         @RequestParam(required = false) String type,
         @RequestParam(required = false) String start,
@@ -65,8 +65,12 @@ public class BankController {
            bankService.getTransactions(accNo, type, startDate, endDate, page, size);// Object reference assignment from method call
         
             if(transactions == null){
-                return ResponseEntity.badRequest().body("Acount not found");
+                return ResponseEntity.badRequest().body(
+                    new APIResponse<>("error","Acount not found", null)
+                );
             }
-            return ResponseEntity.ok(transactions);
+            return ResponseEntity.ok(
+                new APIResponse<>("success", "Transactions retrieved",transactions)
+            );
         }
 }
