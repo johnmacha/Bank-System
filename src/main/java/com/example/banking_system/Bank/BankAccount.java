@@ -15,7 +15,7 @@ public class BankAccount {
     private double balance;
 
     //Many transactions, one account 
-    @OneToMany(mappedBy= "account", cascade = CascadeType.ALL) //Saving account saves transactions
+    @OneToMany(mappedBy= "account", cascade = CascadeType.ALL, orphanRemoval = true) //Saving account saves transactions
     private List<Transaction> transactions = new ArrayList<>();
 
     public BankAccount(){} //Empty constructor for Spring + JPA input
