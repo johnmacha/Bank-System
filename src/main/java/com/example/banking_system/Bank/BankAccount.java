@@ -59,6 +59,9 @@ public class BankAccount {
     public void setUser(User user){
         this.user = user;
     }
+    public void setBalance(double balance){
+        this.balance = balance;
+    }
 
     // Logic
     public double getBalance(){

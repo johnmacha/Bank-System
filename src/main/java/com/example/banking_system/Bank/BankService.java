@@ -16,17 +16,32 @@ private BankRepository bankRepository;
 
 @Autowired
 private UserRepository userRepository;
+// Allow service method to accept the DTO
+    public void createAccount(CreateAccountRequest request){
+    
+    BankAccount acc = new BankAccount();
 
-    public void createAccount(BankAccount acc){
+    acc.setAccNo(request.getAccountNumber());
+    acc.setBalance(request.getInitialDeposit());
+
     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     String username = auth.getName();
-    // System.out.println(auth);
-    // System.out.println(auth.getName());
+
     User user = userRepository.findByUsername(username)
     .orElseThrow(()-> new ResourceNotFoundException("User not found"));
 
-        acc.setUser(user);
-        bankRepository.save(acc);
+    acc.setUser(user);
+    bankRepository.save(acc);
+    
+        // Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    // String username = auth.getName();
+    // // System.out.println(auth);
+    // // System.out.println(auth.getName());
+    // User user = userRepository.findByUsername(username)
+    // .orElseThrow(()-> new ResourceNotFoundException("User not found"));
+
+    //     acc.setUser(user);
+    //     bankRepository.save(acc);
     }
     public BankAccount getAccount(String accNo){
         return bankRepository.findById(accNo).orElse(null);
@@ -92,4 +107,5 @@ private UserRepository userRepository;
             )
         ).collect(Collectors.toList());
     }
+    
 }

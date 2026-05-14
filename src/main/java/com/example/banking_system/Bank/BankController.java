@@ -22,14 +22,12 @@ public class BankController {
     private BankService bankService;
 
     @PostMapping("/create")
-    public ResponseEntity<APIResponse<String>> createAccount(
-        @Valid @RequestBody BankAccount acc
+    public ResponseEntity<?> createAccount(
+        @Valid @RequestBody CreateAccountRequest request
     ){
-        bankService.createAccount(acc);
+        bankService.createAccount(request);
         
-        return ResponseEntity.ok(
-            new APIResponse<>("success", "Account created", null)
-        );
+       return ResponseEntity.ok("Account created successfully");
     }
     @PostMapping("/deposit")
     public String deposit(@RequestParam String accNo, @RequestParam double amount){
@@ -80,4 +78,6 @@ public class BankController {
                 new APIResponse<>("success", "Transactions retrieved",transactions)
             );
         }
+    
+   
 }
