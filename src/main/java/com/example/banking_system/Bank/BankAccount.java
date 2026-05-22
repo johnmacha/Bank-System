@@ -12,21 +12,26 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
 @Entity
+@Table(name="bank_acc")
+
 public class BankAccount {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true)
+    @Column(name = "acc_no", unique = true)
     private String accNo;
 
     @NotBlank(message="Account name is required")
+    @Column(name = "name")
     private String name;
 
     @Positive(message="Initial balance must be positive")
+    @Column(name = "balance")
     private double balance;
 
     //Many transactions, one account 
