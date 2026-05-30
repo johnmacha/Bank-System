@@ -33,7 +33,7 @@ public class BankController {
     public String deposit(@RequestParam String accNo, @RequestParam double amount){
         return bankService.deposit(accNo, amount);
     }
-    @PostMapping("withdraw")
+    @PostMapping("/withdraw")
     public String withdraw(@RequestParam String accNo, @RequestParam double amount){
         return bankService.withdraw(accNo, amount);
     }

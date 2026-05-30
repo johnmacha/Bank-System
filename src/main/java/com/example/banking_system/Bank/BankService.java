@@ -43,18 +43,19 @@ private BankRepository bankRepository;
         return bankRepository.findByAccNo(accNo).orElse(null);
     }
     public String deposit(String accNo, double amount){
+        System.out.println("Deposit reached");
             if(amount <= 0 ){
             throw new InvalidAmountException("Deposit must be grater than 0");
         }
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
 
-        BankAccount acc = bankRepository.findByAccNo(username)
+        BankAccount acc = bankRepository.findByAccNo(accNo)
         .orElseThrow(()-> new ResourceNotFoundException("Account not found"));
 
-        if(!acc.getUser().getUsername().equals(username)){
-            throw new AccessDeniedException("Not your account");
-        }
+        // if(!acc.getUser().getUsername().equals(username)){
+        //     throw new AccessDeniedException("Not your account");
+        // }
         acc.deposit(amount);
         bankRepository.save(acc);
 

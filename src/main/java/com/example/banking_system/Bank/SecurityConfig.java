@@ -21,7 +21,7 @@ public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
     .authorizeHttpRequests(auth -> auth
         // .anyRequest().permitAll()
         .requestMatchers("/auth/**").permitAll()
-    .requestMatchers("/bank/create").permitAll()
+    .requestMatchers("/bank/create", "/bank/deposit").permitAll()
     .anyRequest().authenticated()
     )
     .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
