@@ -35,6 +35,8 @@ public class BankController {
     }
     @PostMapping("/withdraw")
     public String withdraw(@RequestParam String accNo, @RequestParam double amount){
+       System.out.println("Withdraw reached");
+       System.out.println("Amount = " + amount);
         return bankService.withdraw(accNo, amount);
     }
     @GetMapping("/balance")

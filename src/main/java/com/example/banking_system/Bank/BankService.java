@@ -62,15 +62,16 @@ private BankRepository bankRepository;
         return "Deposit successful!";
     }
     public String withdraw(String accNo, double amount){
+        System.out.println("Withdraw service reached");
         BankAccount acc = bankRepository.findByAccNo(accNo).orElse(null);
         if(acc == null){
             throw new ResourceNotFoundException("Account not Found!");
         }
         if(amount <= 0 ){
-            throw new ResourceNotFoundException("Invalid amount!");
+            throw new InvalidAmountException("Invalid amount!");
         }
         if(acc.getBalance() < amount){
-            throw new ResourceNotFoundException("Insufficient funds!");
+            throw new InvalidAmountException("Insufficient funds!");
         }
         acc.withdraw(amount);
         bankRepository.save(acc);

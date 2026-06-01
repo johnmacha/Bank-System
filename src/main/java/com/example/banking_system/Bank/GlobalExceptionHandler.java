@@ -3,12 +3,15 @@ package com.example.banking_system.Bank;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+@ResponseStatus(HttpStatus.BAD_REQUEST)
 @ExceptionHandler(MethodArgumentNotValidException.class)
 public Map<String, String> handleValidationErrors(MethodArgumentNotValidException ex){
     Map<String, String> errors = new HashMap<>();
@@ -17,6 +20,19 @@ public Map<String, String> handleValidationErrors(MethodArgumentNotValidExceptio
         errors.put(error.getField(), error.getDefaultMessage())
     );
     return errors;
+}
+
+@ExceptionHandler(InvalidAmountException.class)
+@ResponseStatus(HttpStatus.BAD_REQUEST)
+public Map<String, String> handleInvalidAmount(InvalidAmountException ex){
+    return Map.of("error", ex.getMessage());
+}
+
+@ExceptionHandler(ResourceNotFoundException.class)
+@ResponseStatus(HttpStatus.NOT_FOUND)
+public Map<String, String> handleResourceNotFound(ResourceNotFoundException ex){
+    return Map.of("error", ex.getMessage());
+}
 }
 // public ResponseEntity<APIResponse<Object>> handleValidation(MethodArgumentNotValidException ex){
    
@@ -31,5 +47,5 @@ public Map<String, String> handleValidationErrors(MethodArgumentNotValidExceptio
 //         new APIResponse<>("error",errorMessage, null)
 //     );
 // }
-}
+
 
